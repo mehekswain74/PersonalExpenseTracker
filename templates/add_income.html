@@ -1,0 +1,89 @@
+{% extends "rough.html" %}
+{% block body %}
+<style>
+    .form-container {
+        background-color: #ffffff;
+        border: 5px solid #ccc;
+        padding: 20px;
+        width: 400px;
+        margin: 0 auto;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  
+    .form-container h1 {
+        text-align: center;
+    }
+  
+    .form-container label {
+        display: block;
+        margin-bottom: 5px;
+    }
+  
+    .form-container input[type="text"],
+    .form-container input[type="number"],
+    .form-container select,
+    .form-container textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+  
+    .form-container input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+    }
+    .my-5 {
+    margin-top: 5rem !important;
+    margin-bottom: 3rem !important;
+  }
+  body {
+          background-image: url("{{url_for('static', filename='asserts/img/exp4.jpg')}}");
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+  </style>
+  <div class="form-container my-5">
+    <h1>Add Amount Form</h1>
+    <form action="/income/add" method="post">
+      {% with messages = get_flashed_messages() %}
+          {% if messages %}
+              <div class="alert alert-info">
+                  <ul>
+                      {% for message in messages %}
+                          <li>{{ message }}</li>
+                      {% endfor %}
+                  </ul>
+              </div>
+          {% endif %}
+      {% endwith %}
+        
+      <label for="amount">Amount:</label>
+      <input type="number" step="0.01" id="amount" name="amount" required>
+
+      <label for="source">Source:</label>
+      <select id="source" name="source" required>
+          <option value="Home">Home</option>
+          <option value="Gift">Gift</option>
+          <option value="SelfEarned">SelfEarned</option>
+
+      </select>
+  
+        <label for="date_time">Date and Time:</label>
+        <input type="datetime-local" id="date" name="date" required>
+        <br>
+        <br>
+        <input type="submit" value="Submit">
+        <br>
+    </form>
+    
+  
+  </div>
+{% endblock %}

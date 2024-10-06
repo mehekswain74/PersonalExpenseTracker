@@ -1,0 +1,84 @@
+{% extends "rough.html" %}
+{% block body %}
+
+<style>
+    #notify{
+        margin-top: 80px;
+        margin-left: 100px;
+    }
+    #table{
+        margin-top: 40px;
+        margin-left: 100px;
+        padding-left: 200px;
+        padding-right: 200px;
+    }
+</style>
+<div id="notify">
+    <h2> Do you want to set some notification ?</h2>
+    <p>
+        Here are some of the category option available set limit for each
+    </p>
+    <h1>Notify</h1>
+    <form action='/notification' method="post">
+      {% with messages = get_flashed_messages() %}
+          {% if messages %}
+              <div class="alert alert-info">
+                  <ul>
+                      {% for message in messages %}
+                          <li>{{ message }}</li>
+                      {% endfor %}
+                  </ul>
+              </div>
+          {% endif %}
+      {% endwith %}
+  
+         <label for="category_id">Select Category:</label>
+          <select id="category_id" name="category_id">
+              {% for category in category %}
+              <option value="{{ category.category_id }}">
+                  {{ category.name }}
+              </option>
+              {% endfor %}
+          </select>
+  
+        <label for="limit">Limit:</label>
+        <input type="number" id="limit" name="limit" required>
+  
+        
+        
+        <button class="btn btn-primary">Submit</button>
+        
+    </form>
+</div>
+
+<div id="table">
+    <table class="table">
+        <thead>
+          <tr>
+            
+            <th scope="col">Category Id</th>
+            <th scope="col">Category Name</th>
+            <th scope="col">Limit</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+  
+            {% for tex in category %}    
+  
+          <tr>
+            
+            <td>{{tex.category_id}}</td>
+            <td>{{tex.name}}</td>
+            <td>{{tex.spending_limit}}</td>
+            
+          </tr>
+          
+          {% endfor %}
+  
+        </tbody>
+      </table>
+      <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</div>
+
+{% endblock %}

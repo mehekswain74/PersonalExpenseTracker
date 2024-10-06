@@ -1,0 +1,24 @@
+{% extends "rough.html" %}
+
+{% block body %}
+<style>
+    .container{
+        height:500px;
+        width:500px;
+        margin-top:75px;
+    }
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="container">
+
+    
+<!-- Add a div to contain the pie chart -->
+<div id="pie-chart"></div>
+
+<!-- Include Plotly.js library -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<!-- Include Plotly graph using the plot_html variable -->
+{{ plot_html | safe }}
+</div>
+{% endblock %}

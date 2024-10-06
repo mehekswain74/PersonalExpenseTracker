@@ -1,0 +1,110 @@
+{% extends "rough.html" %}
+
+{% block body %}
+<style>
+  .form-container {
+      background-color: #ffffff;
+      border: 5px solid #ccc;
+      padding: 20px;
+      width: 400px;
+      margin: 0 auto;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-container h1 {
+      text-align: center;
+  }
+
+  .form-container label {
+      display: block;
+      margin-bottom: 5px;
+  }
+
+  .form-container input[type="text"],
+  .form-container input[type="number"],
+  .form-container select,
+  .form-container textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+  }
+
+  .form-container input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+  }
+  .my-5 {
+  margin-top: 5rem !important;
+  margin-bottom: 3rem !important;
+}
+body {
+        background-image: url("{{url_for('static', filename='asserts/img/exp4.jpg')}}");
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+</style>
+<div class="form-container my-5">
+  <h1>Expense Form</h1>
+  <form action='/expenses/add' method="post">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-info">
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endwith %}
+
+       <label for="category_id">Select Category:</label>
+        <select id="category_id" name="category_id">
+            {% for category in categories %}
+            <option value="{{ category.category_id }}">
+                <img src="{{ category.icon }}" alt="{{ category.name }}" width="20" height="20">
+                {{ category.name }}
+            </option>
+            {% endfor %}
+        </select>
+
+      <label for="date_time">Date and Time:</label>
+      <input type="datetime-local" id="date" name="date" required>
+
+      <label for="amount">Amount:</label>
+      <input type="number" step="0.01" id="amount" name="amount" required>
+
+      <label for="paymentmethod">Payment Method:</label>
+      <select id="paymentmethod" name="paymentmethod" required>
+          <option value="cash">Cash</option>
+          <option value="phone_pay">Phone Pay</option>
+          <option value="gpay">GPay</option>
+          <option value="paytm">PayTm</option>
+          <option value="other">other</option>
+
+      </select>
+
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" rows="4" cols="50" required></textarea>
+
+      <label for="vendor">Vendor:</label>
+      <input type="text" id="vendor" name="vendor" required>
+<!--
+      <label for="attachment">Attachment:</label>
+      <input type="file" id="attachment" name="attachment">
+-->
+      <input type="submit" value="Submit">
+      <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+  </form>
+  
+
+</div>
+{% endblock %}    

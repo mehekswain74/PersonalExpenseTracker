@@ -1,0 +1,88 @@
+{% extends "rough.html" %}
+{% block body %}
+<style>
+    /* Add your styles here */
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .feedback-container {
+        margin-top: 111px;
+        max-width: 600px;
+        margin-left: 150px;
+    }
+    .feedback-header {
+        margin-top: 30px;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        justify-content: center;
+    }
+    .feedback-text {
+        margin-bottom: 20px;
+    }
+    .feedback-form {
+        display: flex;
+        flex-direction: column;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    .form-group textarea {
+        height: 150px;
+    }
+    .submit-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+<div class="feedback-container">
+    
+    <div class="feedback-header">Feedback Form</div>
+    <div class="feedback-text">
+        <p>
+            Your feedback is valuable to us! It helps us understand your experience
+            and make improvements to provide a better service. Please share your thoughts
+            with us below:
+        </p>
+    </div>
+    <form class="feedback-form" action="/submit_feedback" method="post">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-info">
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endwith %}
+        <div class="form-group">
+            <label for="feedback">Your Feedback:</label>
+            <textarea id="feedback" name="feedback" required></textarea>
+            <br>
+            <br>
+            <br>
+         
+
+            <label for="phone">Phone No:</label>
+           <input type="number" step="0.01" id="phone" name="phone" required>
+
+
+        </div>
+        <div class="form-group">
+            <button type="submit" class="submit-btn">Submit Feedback</button>
+        </div>
+    </form>
+    <a href="{{ url_for('view_expenses') }}">Select a different month and year</a>
+</div>
+{% endblock %}

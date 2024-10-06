@@ -1,0 +1,98 @@
+{% extends "rough.html" %}
+{% block body %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style>
+    #show{
+      position:absolute;
+        display:flex;
+        flex-direction:row;
+        margin-top:75px;
+        padding-left: 100px;
+        
+    }
+    #pie-chart{
+      height:500px;
+      width:500px;
+      margin-top: 65px;
+
+    }
+    .round-button {
+        width: 30px;
+        height: 30px;
+        background-color: #007bff; /* Change the background color as needed */
+        border-radius: 50%; /* Makes it round */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .plus-sign {
+        font-size: 36px;
+        color: #fff; /* Change the color of the plus sign as needed */
+    }
+    .btn btn-primary{
+        width: 30px;
+        height: 30px;
+    }
+    canvas {
+        max-width: 600px;
+        margin: 20px auto;
+    }
+    #extab{
+      float:right;
+      margin-top:-20px;
+      padding-left: 300px;
+    }
+
+</style>
+<div id="show">
+<div class="ztab">
+<h3><p>{{greeting}}, {{username}}!</p></h3>
+<p>Income: ₹{{user_income}} <button onclick="window.location.href='/income/add'" class="btn btn-primary" id="adinc">Add Income</button></p>
+<p>Balance: ₹{{ user_balance }}</p>
+
+<!-- Add a div to contain the pie chart -->
+<div id="pie-chart">
+
+<!-- Include Plotly.js library -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<!-- Include Plotly graph using the plot_html variable -->
+{{ plot_html | safe }}
+<p>Add your expenses<button class="round-button" onclick="window.location.href='/expenses/add'"><span class="plus-sign">+</span>
+</button></p>
+</div>
+
+</div>
+
+
+
+<!-- Display today's expenses 
+<h2>Today's Expenses</h2>
+<ul>
+    {% for expense in today_expenses %}
+        <li>{{ expense.amount }} - {{ expense.description }} (Category: {{ expense.category.name }})</li>
+    {% endfor %}
+</ul>
+-->
+<div id="extab" padding-left: 100;>
+  
+
+  
+  <hr>
+  <h2>Today's Notifications</h2>
+  <ul>
+    {% for notification in notifications %}
+      <li>{{ notification.message }} - {{ notification.timestamp }}</li>
+    {% endfor %}
+  </ul>
+
+   
+ 
+
+ 
+</div>
+</div>
+
+{% endblock %}   

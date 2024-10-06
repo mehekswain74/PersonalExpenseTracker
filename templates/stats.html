@@ -1,0 +1,37 @@
+{% extends "rough.html" %}
+{% block body %}
+
+<style>
+  #prev-graph{
+    margin-top: 100px;
+    padding-left: 112px;
+    height:500px;
+    width: 757px;
+    
+
+  }
+  .prev-graph1{
+    padding-left: 112px;
+    height:500px;
+    width: 757px;
+  }
+  .prev-graph2{
+    /* padding-left: 300px; */
+    margin-left: 800px;
+    margin-top: -997px;
+    height:500px;
+    width: 600px;
+  }
+</style>
+
+<div id="prev-graph">
+    <!-- Display the previous month's expenses graph -->
+    {{ plot_html | safe }}
+  </div>
+<div class="prev-graph1">
+  {{ plot_html1 | safe }}
+</div>
+<div class="prev-graph2">
+  {{ plot_html2 | safe }}
+</div>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "rough.html" %} {% block body %}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<style>
+  .viewex {
+    margin-top: 70px;
+    margin-left: 90px;
+  }
+  .tabsize {
+    margin-top: 20px;
+    margin-right: 30px;
+  }
+  .cat {
+    margin-left: 90px;
+    margin-right: 30px;
+  }
+</style>
+<div class="viewex">
+  <h1>View Expenses</h1>
+  <form method="post" action="{{ url_for('view_expenses') }}">
+    <br />
+    <label>
+      <input type="checkbox" name="selected_option" value="today" /> View
+      Today's Expenses
+    </label>
+    <br />
+    <label for="month">Select Month:</label>
+    <select name="month" id="month">
+      <!-- Include options for all months -->
+      <!-- Example for the last 12 months -->
+      {% for month in range(12, 0, -1) %}
+      <option value="{{ month }}">{{ month }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="year">Select Year:</label>
+    <select name="year" id="year">
+      <!-- Include options for the last few years -->
+      <!-- Example: from 2023 to 2020 -->
+      {% for year in range(2023, 2019, -1) %}
+      <option value="{{ year }}">{{ year }}</option>
+      {% endfor %}
+    </select>
+    <br />
+    <br />
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <div class="tabsize">
+    {% if expenses %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Category</th>
+          <th>Description</th>
+          {% if selected_option == 'today' %}
+          <th>Edit</th>
+          <th>Delete</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for expense in expenses %}
+        <tr>
+          <td>{{ expense.date }}</td>
+          <td>{{ expense.amount }}</td>
+          <td>{{ expense.category.name }}</td>
+          <td>{{ expense.description }}</td>
+          {% if selected_option == 'today' %}
+          <td>
+            <a href="{{ url_for('edit', expense_id=expense.expense_id) }}"
+              ><button class="btn btn-primary text-uppercase">Edit</button></a
+            >
+          </td>
+
+          <td>
+            <a
+              href="{{ url_for('delete_expense', expense_id=expense.expense_id) }}"
+              ><button class="btn btn-primary text-uppercase">Delete</button></a
+            >
+          </td>
+
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+<div class="cat">
+  {% if category_totals is not none %}
+  <h2>Total Expenses by Category</h2>
+  <table class="table">
+    <tr>
+      <th>Category</th>
+      <th>Total Amount</th>
+    </tr>
+    {% for category, total_amount in category_totals.items() %}
+    <tr>
+      <td>{{ category.name }}</td>
+      <td>{{ total_amount }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p>No expenses found for the selected option.</p>
+</div>
+{% endif %}
+<div class="graph">
+
+    {{ plot_html | safe }}
+</div> 
+{% endblock %}

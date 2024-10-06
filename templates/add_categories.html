@@ -1,0 +1,67 @@
+{% extends "rough.html" %}
+{% block body %}
+
+<style>
+    .container{
+        margin-top:75px;
+    }
+    #category-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            
+        }
+        
+        .category {
+            margin: 10px;
+            text-align: center;
+            padding-right: 30px;
+            
+        }
+        
+        .category img {
+            width: 100px;  /* Adjust the width as needed */
+            height: 100px; /* Adjust the height as needed */
+            margin-bottom: 5px;
+            
+        }
+        
+    
+</style>
+<div class="container" >
+    <h1>Add Category</h1>
+    <form action='/category/add' method="POST">
+        <!-- Category Name -->
+        <div class="mb-3">
+            <label for="categoryName" class="form-label">Category Name</label>
+            <input type="text" class="form-control" id="categoryName" name="categoryName" required>
+            <label for="categoryicon" class="form-label">Category Icon</label>
+            <input type="text" class="form-control" id="categoryIcon" name="categoryIcon" required>
+            <label for="categorylimit" class="form-label">Category Limit</label>
+            <input type="text" class="form-control" id="categoryLimit" name="categoryLimit" required>
+        </div>
+
+        <!-- Icon Selection -->
+
+
+        <button type="submit" class="btn btn-primary">Add Category</button>
+    </form>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</div>
+<div id="category-container">
+    {% for category in categories %}
+        <div class="category">
+           
+            {% if category.cat_img %}
+            <img src="{{ url_for('static', filename='asserts/' + category.cat_img) }}" style="border: 2px solid black; border-radius: 4px;">
+            {% else %}
+            <span>No image available</span>
+            {% endif %}
+            <p>{{ category.name }}</p>
+            
+        </div>
+    {% endfor %}
+</div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}   

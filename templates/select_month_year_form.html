@@ -1,0 +1,100 @@
+{% extends "rough.html" %}
+
+{% block body %}
+<style>
+    body{
+        padding-right: 30px;
+    }
+    .selview{
+        
+        margin-top:75px;
+        padding-left: 100px;
+        justify-content: center;
+    }
+    .coltab{
+        margin-top: 20px;
+    }
+    .btn btn-primary{
+        margin-bottom: -10px;
+    }
+</style>
+<div class="selview">
+<div id="container" style="justify-content: center;">
+    <h1>Select a Month and Year</h1>
+    
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    
+    <form method="POST" action="{{ url_for('view_expenses') }}">
+        <label for="month">Select Month:</label>
+        <select name="month" id="month">
+            <option value="2023-01">January 2023</option>
+            <option value="2023-02">February 2023</option>
+            <option value="2023-03">March 2023</option>
+            <option value="2023-04">April 2023</option>
+            <option value="2023-05">May 2023</option>
+            <option value="2023-06">June 2023</option>
+            <option value="2023-07">July 2023</option>
+            <option value="2023-08">August 2023</option>
+            <option value="2023-09">September 2023</option>
+            <option value="2023-10">October 2023</option>
+            <option value="2023-11">November 2023</option>
+            <option value="2023-12">December 2023</option>
+            <!-- Add more months here -->
+        </select>
+
+        <label for="year">Select Year:</label>
+        <select name="year" id="year">
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <!-- Add more years here -->
+        </select>
+
+        <button type="submit" class="btn btn-primary" >View Expenses</button>
+    </form>
+</div>
+<div class="coltab">
+    <h1>Expenses for {{ selected_month }} - {{ selected_year }}</h1>
+        
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    
+        <table class='table'>
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Amount (₹)</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.date }}</td>
+                <td>{{ expense.category.name }}</td>
+                <td>{{ expense.amount }}</td>
+                <td>{{ expense.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    
+        <a href="{{ url_for('view_expenses') }}">Select a different month and year</a>
+    <div>
+</div>
+{% endblock %}
